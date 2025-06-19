@@ -31,6 +31,8 @@
 
 clear all; close all
 
+addpath('utils')
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Part 1: Extracting and inspecting structural eigenmodes
 
