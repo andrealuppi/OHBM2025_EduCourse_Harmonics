@@ -101,17 +101,58 @@ fcn_plot_brain_ENIGMA(fineMap, 'Schaefer', ['Finer map'])
 [harmonic_energy] = fcn_harmonic_energy([smoothMap, midMap, fineMap], harmonics_SC400, frequencies_SC400)
 
 
+
 % Now plot: notice how as the maps get finer-grained, contributions
 % from the fine-grained harmonics increase
 figure; hold on
 subplot(3,1,1)
 plot(1:size(harmonic_energy, 1), harmonic_energy(:,1), 'red')
+legend({'Smoother'})
+
 subplot(3,1,2)
 plot(1:size(harmonic_energy, 1), harmonic_energy(:,2), 'blue')
 ylabel('Harmonic Energy (normalised contribution)')
+legend({'Mid-smoothness'})
+
 subplot(3,1,3)
 plot(1:size(harmonic_energy, 1), harmonic_energy(:,3), 'black')
 xlabel('Harmonic Frequency Number K')
+legend({'Finer'})
+
+
+% Now repeat but with some real maps
+FCgradient1Map = csvread('data/FC_Gradient1_Schaefer400.csv');
+fcn_plot_brain_ENIGMA(FCgradient1Map, 'Schaefer', ['FC Gradient 1'])
+
+attentionMp = csvread('data/Neurosynth_Attention_Schaefer400.csv');
+fcn_plot_brain_ENIGMA(attentionMp, 'Schaefer', ['Attention'])
+
+PET1aMap = csvread('data/PET_5HT1A_Schaefer400.csv');
+fcn_plot_brain_ENIGMA(PET1aMap, 'Schaefer', ['Serotonin 1A map'])
+
+% Obtain their energy (normalised contribution) 
+% in terms of structural harmonics
+[harmonic_energy_real] = fcn_harmonic_energy([FCgradient1Map, attentionMp, PET1aMap], harmonics_SC400, frequencies_SC400)
+
+
+% Now plot: notice how as the maps get finer-grained, contributions
+% from the fine-grained harmonics increase
+figure; hold on
+subplot(3,1,1)
+plot(1:size(harmonic_energy_real, 1), harmonic_energy_real(:,1), 'red')
+legend({'FC gradient'})
+
+subplot(3,1,2)
+plot(1:size(harmonic_energy_real, 1), harmonic_energy_real(:,2), 'blue')
+ylabel('Harmonic Energy (normalised contribution)')
+legend({'Attention'})
+
+subplot(3,1,3)
+plot(1:size(harmonic_energy_real, 1), harmonic_energy_real(:,3), 'black')
+legend({'5HT1A'})
+xlabel('Harmonic Frequency Number K')
+
+
 
 
 
